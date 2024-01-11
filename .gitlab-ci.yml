@@ -17,23 +17,20 @@ build_app:
   script:
     - mkdir my_app
     - mkdir release
-    - touch my_app/my_app
-    - echo "hello this is my code" >> my_app/my_app
-    - tar -czvf release/my_app.tar.gz my_app/.
+    - export TIMESTAMP=$(date +%s)
+    - touch my_app/my_app_$TIMESTAMP
+    - echo "hello this is my code" >> my_app/my_app_$TIMESTAMP
+    - tar -czvf release/my_app_$TIMESTAMP.tar.gz my_app/.
   artifacts:
     paths:
-      - release/my_app.tar.gz
+      - release/*.tar.gz
 publish_to_registry:
   stage: publish
   script:
-    - ls 
-    - pwd
     - cd release
-    - ls
-    - ls | grep *.tar.gz
-    - export PACKAGE_FILE=my_app.tar.gz
+    - export PACKAGE_FILE=$(ls | grep *.tar.gz)
     - echo $PACKAGE_FILE
-    - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file my_app.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
+    - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file $PACKAGE_FILE "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
   dependencies:
     - build_app
 include:
