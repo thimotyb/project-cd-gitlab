@@ -28,9 +28,12 @@ publish_to_registry:
   script:
     - ls 
     - pwd
+    - cd release
+    - ls
     - ls | grep *.tar.gz
     - $PACKAGE_FILE=my_app.tar.gz
-    - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file release/my_app.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
+    - echo $PACKAGE_FILE
+    - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file my_app.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
   dependencies:
     - build_app
 include:
