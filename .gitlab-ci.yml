@@ -26,8 +26,8 @@ build_app:
 publish_to_registry:
   stage: publish
   script:
-    - ls | grep release/*.tar.gz
-    - $PACKAGE_FILE=$(ls | grep release/*.tar.gz)
+    - ls release | grep *.tar.gz
+    - $PACKAGE_FILE=$(ls release | grep *.tar.gz)
     - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file release/my_app.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
   dependencies:
     - build_app
