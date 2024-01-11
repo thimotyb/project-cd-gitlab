@@ -15,17 +15,19 @@ sast:
 build_app:
   stage: build
   script:
-    - touch my_app
-    - echo "hello this is my code" >> my_app
-    - tar -czvf my_app.tar.gz .
+    - mkdir my_app
+    - mkdir release
+    - touch my_app/my_app
+    - echo "hello this is my code" >> my_app/my_app
+    - tar -czvf release/my_app.tar.gz my_app/.
   artifacts:
     paths:
-      - my_app.tar.gz
+      - release/my_app.tar.gz
 publish_to_registry:
   stage: publish
   script:
     - $PACKAGE_FILE=$(ls | grep *.tar.gz)
-    - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file my_app.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
+    - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file release/my_app.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
   dependencies:
     - build_app
 include:
