@@ -33,5 +33,20 @@ publish_to_registry:
     - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file $PACKAGE_FILE "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
   dependencies:
     - build_app
+publish_to_container_registry:
+  stage: publish
+  image: docker:stable
+  services:
+    - docker:dind
+  variables:
+    IMAGE: $CI_REGISTRY_IMAGE/my_app/0.0.1
+  script:
+    - docker login -u "test" -p "gldt-gAByff85d_Nju8mPcLvt" $CI_REGISTRY
+    - docker build -t $IMAGE .
+    - docker push $IMAGE
+  dependencies:
+    - build_app
+
+
 include:
 - template: Security/SAST.gitlab-ci.yml
