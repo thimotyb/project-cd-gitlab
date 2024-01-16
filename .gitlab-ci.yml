@@ -13,6 +13,9 @@ stages:
   - run_package
   - deploy
 
+include:
+- template: Security/SAST.gitlab-ci.yml
+
 build_app:
   stage: build
   script:
@@ -80,5 +83,4 @@ deploy_k8s:
   dependencies:
     - publish_to_container_registry
 
-include:
-- template: Security/SAST.gitlab-ci.yml
+
