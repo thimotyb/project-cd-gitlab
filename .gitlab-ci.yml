@@ -89,9 +89,9 @@ release_job:
   script:
     - echo "running release_job for $TAG"
     - echo "TAG=v$TAG" >> variables.env 
-  artifacts:
-    reports:
-      dotenv: variables.env                         # export variables for following jobs
+ # artifacts:
+ #   reports:
+ #     dotenv: variables.env                         # export variables for following jobs
   release:                                         # See https://docs.gitlab.com/ee/ci/yaml/#release for available properties
     tag_name: 'v0.$CI_PIPELINE_IID'                # The version is incremented per pipeline.
     description: 'v0.$CI_PIPELINE_IID'
