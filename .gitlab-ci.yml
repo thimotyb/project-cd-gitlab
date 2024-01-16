@@ -29,6 +29,11 @@ build_app:
 
 publish_to_registry:
   stage: publish
+  needs:
+    - job: release_job
+      artifacts: true
+    - job: build_app
+    
   script:
     - echo $TAG
     - cd release
@@ -40,6 +45,10 @@ publish_to_registry:
 
 publish_to_container_registry:
   stage: publish
+  needs:
+  - job: release_job
+    artifacts: true
+  - job: build_app
   image: docker:stable
   services:
     - docker:dind
@@ -54,6 +63,7 @@ publish_to_container_registry:
     - docker push $IMAGE
   dependencies:
     - build_app
+    - release_job
 
 use_container_from_registry:
   stage: run_container
