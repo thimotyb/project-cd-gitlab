@@ -11,6 +11,7 @@ stages:
   - publish
   - run_container
   - run_package
+  - deploy
 sast:
   stage: test
 
@@ -57,6 +58,16 @@ use_container_from_registry:
     - ls -al     # Show the current directory as our container's working directory
   dependencies:
     - publish_to_container_registry
+deploy:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context kubernetes-admin@kubernetes
+    - kubectl get pods
+    - kubectl run myapp --image $CI_REGISTRY_IMAGE/my_app/0.0.1
+
 
 include:
 - template: Security/SAST.gitlab-ci.yml
