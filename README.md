@@ -1,7 +1,7 @@
 # project-cd-test
 
 token: test gldt-gAByff85d_Nju8mPcLvt
-curl --user "test:gldt-gAByff85d_Nju8mPcLvt" ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable-releases/0.0.1/my_app.tar.gz
+curl --user "test:gldt-gAByff85d_Nju8mPcLvt" ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable-releases/0.0.1/my_app.tar.gz 
 
 ## Getting started
 
