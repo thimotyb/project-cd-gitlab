@@ -44,7 +44,6 @@ publish_to_container_registry:
     IMAGE: $CI_REGISTRY_IMAGE/my_app/0.0.1
   script:
     - ls
-    - ls my_app
     - docker login -u "test" -p "gldt-gAByff85d_Nju8mPcLvt" $CI_REGISTRY
     - docker build -t $IMAGE .
     - docker push $IMAGE
