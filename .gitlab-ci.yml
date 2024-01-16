@@ -72,6 +72,8 @@ deploy_k8s:
     - kubectl config use-context thimoty/project-cd-test:killercoda
     - kubectl get pods
     - kubectl run myapp --image $CI_REGISTRY_IMAGE/my_app/0.0.1
+    - kubectl get pods
+    - kubectl describe pod myapp
   dependencies:
     - publish_to_container_registry
 
