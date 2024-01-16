@@ -53,10 +53,8 @@ publish_to_container_registry:
 use_container_from_registry:
   stage: run_container
   image: $CI_REGISTRY_IMAGE/my_app/0.0.1
-  services:
-    - docker:dind
   script:
-    - docker run $CI_REGISTRY_IMAGE/my_app/0.0.1 ls -al     # Show the current directory as our container's working directory
+    - ls -al     # Show the current directory as our container's working directory
   dependencies:
     - publish_to_container_registry
 
