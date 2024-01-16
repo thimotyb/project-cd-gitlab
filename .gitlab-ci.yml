@@ -30,6 +30,7 @@ build_app:
 publish_to_registry:
   stage: publish
   script:
+    - echo $TAG
     - cd release
     - export PACKAGE_FILE=$(ls | grep *.tar.gz)
     - echo $PACKAGE_FILE
