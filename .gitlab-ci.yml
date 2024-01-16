@@ -8,14 +8,11 @@
 stages:
   - build
   - test
+  - release
   - publish
   - run_container
   - run_package
   - deploy
-  - release
-
-include:
-- template: Security/SAST.gitlab-ci.yml
 
 build_app:
   stage: build
@@ -29,9 +26,6 @@ build_app:
   artifacts:
     paths:
       - release/*.tar.gz
-
-sast:
-  stage: test
 
 publish_to_registry:
   stage: publish
