@@ -52,7 +52,7 @@ publish_to_container_registry:
     - build_app
 use_container_from_registry:
   stage: run_container
-  image: $CI_REGISTRY_IMAGE/my_app/0.0.1:latest
+  image: $CI_REGISTRY_IMAGE/my_app/0.0.1
   script:
     - ls -al public-app     # Show the current directory as our container's working directory
   dependencies:
