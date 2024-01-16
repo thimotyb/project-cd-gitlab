@@ -29,13 +29,7 @@ build_app:
 
 publish_to_registry:
   stage: publish
-  needs:
-    - job: release_job
-      artifacts: true
-    - job: build_app
-    
   script:
-    - echo $TAG
     - cd release
     - export PACKAGE_FILE=$(ls | grep *.tar.gz)
     - echo $PACKAGE_FILE
@@ -45,17 +39,12 @@ publish_to_registry:
 
 publish_to_container_registry:
   stage: publish
-  needs:
-  - job: release_job
-    artifacts: true
-  - job: build_app
   image: docker:stable
   services:
     - docker:dind
   variables:
     IMAGE: $CI_REGISTRY_IMAGE/my_app/0.0.1
   script:
-    - echo $TAG
     - ls
     - echo $CI_REGISTRY
     - docker login -u "test" -p "gldt-gAByff85d_Nju8mPcLvt" $CI_REGISTRY
