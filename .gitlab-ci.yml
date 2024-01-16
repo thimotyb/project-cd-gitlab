@@ -36,6 +36,7 @@ publish_to_registry:
     - curl --user "test:gldt-gAByff85d_Nju8mPcLvt" --upload-file $PACKAGE_FILE "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/stable_releases/0.0.1/$PACKAGE_FILE"
   dependencies:
     - build_app
+
 publish_to_container_registry:
   stage: publish
   image: docker:stable
@@ -51,6 +52,7 @@ publish_to_container_registry:
     - docker push $IMAGE
   dependencies:
     - build_app
+
 use_container_from_registry:
   stage: run_container
   image: $CI_REGISTRY_IMAGE/my_app/0.0.1
@@ -58,16 +60,20 @@ use_container_from_registry:
     - ls -al     # Show the current directory as our container's working directory
   dependencies:
     - publish_to_container_registry
-deploy:
+
+deploy_k8s:
+  stage:
+    deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   script:
     - kubectl config get-contexts
-    - kubectl config use-context kubernetes-admin@kubernetes
+    - kubectl config use-context thimoty/project-cd-test:killercoda
     - kubectl get pods
     - kubectl run myapp --image $CI_REGISTRY_IMAGE/my_app/0.0.1
-
+  dependencies:
+    - publish_to_container_registry
 
 include:
 - template: Security/SAST.gitlab-ci.yml
