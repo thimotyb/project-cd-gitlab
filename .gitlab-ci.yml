@@ -53,7 +53,7 @@ use_container_from_registry:
   stage: run_container
   image: $CI_REGISTRY_IMAGE/my_app/0.0.1:latest
   script:
-    - ls –al      # Show the current directory as our container's working directory
+    - ls -l     # Show the current directory as our container's working directory
   dependencies:
     - publish_to_container_registry
 
